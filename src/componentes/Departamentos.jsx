@@ -6,6 +6,9 @@ function Departamentos() {
       <h2>Departamentos</h2>
       <p>Aquí irán las secciones de los departamentos turísticos del Perú.</p>
     </section>
+
+  
+
   );
 }
 

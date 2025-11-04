@@ -2,15 +2,13 @@ import React from "react";
 import "animate.css";
 import "swiper/css";
 import "swiper/css/bundle";
-
+import { Link } from "react-router-dom"; // 👈 ESTA LÍNEA ES CLAVE
 
 function Header() {
   return (
     <header className="header">
       <div className="menu container">
-        <a href="#" className="logo">
-          Turismo-Perú
-        </a>
+        <Link to="/" className="logo">Turismo-Perú</Link>
 
         <input type="checkbox" id="menu" />
         <label htmlFor="menu">
@@ -19,21 +17,11 @@ function Header() {
 
         <nav className="navbar">
           <ul>
-            <li>
-              <a href="#"><i className="fa-solid fa-house"></i>Inicio</a>
-            </li>
-            <li>
-              <a href="#"><i className="fa-solid fa-map-location-dot"></i>Contexto</a>
-            </li>
-            <li>
-              <a href="#"><i className="fa-solid fa-envelope"></i>Contacto</a>
-            </li>
-            <li>
-              <a href="#"><i className="fa-solid fa-table"></i>Tablas</a>
-            </li>
-            <li>
-              <a href="#"><i className="fa-solid fa-city"></i>Departamentos</a>
-            </li>
+            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="/contexto">Contexto</Link></li>
+            <li><Link to="/contacto">Contacto</Link></li>
+            <li><Link to="/tablas">Tablas</Link></li>
+            <li><Link to="/departamentos">Departamentos</Link></li>
           </ul>
         </nav>
       </div>
@@ -50,12 +38,11 @@ function Header() {
           del país, mostrando sus atractivos, tradiciones y la calidez de su gente 👌.”
         </p>
 
-        <a href="#" className="btn-1">
-          Contexto
-        </a>
+        <Link to="/contexto" className="btn-1">Contexto</Link>
       </div>
     </header>
   );
 }
 
 export default Header;
+
