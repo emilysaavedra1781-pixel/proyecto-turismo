@@ -16,14 +16,24 @@ function Header() {
         </label>
 
         <nav className="navbar">
-          <ul>
-            <li><Link to="/">Inicio</Link></li>
-            <li><Link to="/contexto">Contexto</Link></li>
-            <li><Link to="/contacto">Contacto</Link></li>
-            <li><Link to="/tablas">Tablas</Link></li>
-            <li><Link to="/departamentos">Departamentos</Link></li>
-          </ul>
-        </nav>
+  <ul>
+    <li>
+      <Link to="/"><i className="fa-solid fa-house"></i> Inicio</Link>
+    </li>
+    <li>
+      <Link to="/contexto"><i className="fa-solid fa-map-location-dot"></i> Contexto</Link>
+    </li>
+    <li>
+      <Link to="/contacto"><i className="fa-solid fa-envelope"></i> Contacto</Link>
+    </li>
+    <li>
+      <Link to="/tablas"><i className="fa-solid fa-table"></i> Tablas</Link>
+    </li>
+    <li>
+      <Link to="/departamentos"><i className="fa-solid fa-city"></i> Departamentos</Link>
+    </li>
+  </ul>
+</nav>
       </div>
 
       <div className="header-content container">
