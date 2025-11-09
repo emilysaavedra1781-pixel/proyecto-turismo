@@ -1186,3 +1186,32 @@ p{
   }
 }
 
+body.modo-oscuro {
+  background-color: #121212;
+  color: #f1f1f1;
+  transition: all 0.3s ease-in-out;
+}
+
+body.modo-oscuro header {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+body.modo-oscuro .navbar ul li a {
+  color: #f1f1f1;
+}
+
+body.modo-oscuro .navbar ul li a:hover {
+  color: #ffd700;
+}
+
+body.modo-oscuro .formulario-contacto,
+body.modo-oscuro .departamentos {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+body.modo-oscuro footer {
+  background: #111;
+  color: #ccc;
+}
+
