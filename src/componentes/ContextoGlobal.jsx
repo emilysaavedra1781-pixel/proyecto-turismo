@@ -1,8 +1,7 @@
-//Esto permitirá que todos los componentes accedan al idioma y modo visual sin tener que pasarlo manualmente.
-
 import React, { createContext, useState, useContext } from "react";
 
-const GlobalContext = createContext();
+// exportacion
+export const GlobalContext = createContext();
 
 export const useGlobal = () => useContext(GlobalContext);
 
@@ -10,7 +9,7 @@ export const GlobalProvider = ({ children }) => {
   // Idioma
   const [idioma, setIdioma] = useState("es"); // es o en
 
-  // blanco o escuro
+  // Modo claro / oscuro
   const [modoOscuro, setModoOscuro] = useState(false);
 
   // Alternar idioma
@@ -18,7 +17,7 @@ export const GlobalProvider = ({ children }) => {
     setIdioma((prev) => (prev === "es" ? "en" : "es"));
   };
 
-  // Alternar 
+  // Alternar modo oscuro
   const cambiarModo = () => {
     setModoOscuro((prev) => !prev);
     document.body.classList.toggle("modo-oscuro");
@@ -30,3 +29,4 @@ export const GlobalProvider = ({ children }) => {
     </GlobalContext.Provider>
   );
 };
+

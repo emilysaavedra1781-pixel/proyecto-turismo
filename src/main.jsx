@@ -5,10 +5,7 @@ import App from "./App.jsx";
 import "./style.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "leaflet/dist/leaflet.css";
-
-//acceso para toda la pagina para el idioma y modo oscuro
-
-import { GlobalProvider } from "./componentes/ContextoGlobal.jsx";
+import { GlobalProvider } from "./componentes/ContextoGlobal.jsx"; // 👈 XD
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
 
 //version anterior
 
