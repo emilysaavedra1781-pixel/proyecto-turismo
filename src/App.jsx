@@ -5,9 +5,11 @@ import Inicio from "./componentes/Inicio";
 import Contexto from "./componentes/Contexto";
 import Contacto from "./componentes/Contacto";
 import Departamentos from "./componentes/Departamentos";
+import DepartamentosDetalle from "./componentes/DepartamentosDetalle";
 import Footer from "./componentes/Footer";
 import Tabla from "./componentes/Tabla"; // si tienes ese componente
-import "./style.css";
+import "./componentes/style.css";
+
 
 function App() {
   return (

@@ -1,12 +1,25 @@
 import React from "react";
+import "../style.css";
 
-function Contacto() {  // La función debe empezar con mayúscula
+export default function Contacto() {
   return (
-    <div style={{ color: "blue", fontSize: "18px", padding: "20px" }}>
-      Esta es la página de contacto. Aquí trabaja la persona 5.
-    </div>
+    <main>
+      <section className="formulario-contacto">
+        <h1>Formulario de Contacto</h1>
+
+        <form id="contactFormPage" action="form.php" method="post" noValidate>
+          <label htmlFor="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" required />
+
+          <label htmlFor="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required />
+
+          <label htmlFor="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+          <button type="submit">Enviar</button>
+        </form>
+      </section>
+    </main>
   );
 }
-
-export default Contacto;
-
