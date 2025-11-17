@@ -4,6 +4,7 @@ import Primero from "./Primero";
 import Mision from "./Mision";
 import Vision from "./Vision";
 import Festividades from "./Festividades";
+import Persona4 from "./Persona4";
 
 export default function Inicio() {
   return (
@@ -13,6 +14,7 @@ export default function Inicio() {
       <Mision />
       <Vision />
       <Festividades />
+      <Persona4 />
     </>
   );
 }

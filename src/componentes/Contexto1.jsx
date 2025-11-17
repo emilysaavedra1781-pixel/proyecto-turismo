@@ -1,9 +1,10 @@
 import React from "react";
-import MapaPeru from "../componentes/MapaPeru";
-import Carrusel from "../componentes/Carrusel"; // ⬅️ importas el carrusel
+import MapaPeru from "./MapaPeru";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../style.css";
+import Carrusel from './Carrusel'; // o la ruta correcta
+
 
 function Contexto() {
   return (

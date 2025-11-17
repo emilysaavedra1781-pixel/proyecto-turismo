@@ -1,4 +1,7 @@
 import React from "react";
+import { GlobalProvider } from "./ContextoGlobal.jsx";
+
+
 import "../style.css"; // Asegúrate de tener los estilos o agregarlos al final
 
 function Footer() {
