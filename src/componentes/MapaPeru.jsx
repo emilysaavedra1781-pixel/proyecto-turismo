@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
+import { useGlobal } from "./ContextoGlobal";
+import { textos } from "../data/traducciones";
 
 // 📍 Coordenadas principales de 10 regiones del Perú
 const ciudades = [
@@ -19,6 +21,7 @@ const ciudades = [
 ];
 
 const MapaPeru = () => {
+  const { idioma } = useGlobal();
   const [clima, setClima] = useState({});
   const apiKey = import.meta.env.VITE_OPENWEATHER_KEY;  // 🔑 pon tu clave de OpenWeather
 
@@ -70,9 +73,9 @@ const MapaPeru = () => {
             <h3>{ciudad.nombre}</h3>
             {clima.nombre === ciudad.nombre ? (
               <>
-                <p>🌡️ Temperatura: {clima.temp} °C</p>
-                <p>💧 Humedad: {clima.humedad}%</p>
-                <p>☁️ {clima.descripcion}</p>
+                <p>🌡️ {textos[idioma].clima.temperatura}: {clima.temp} °C</p>
+                <p>💧 {textos[idioma].clima.humedad}: {clima.humedad}%</p>
+                <p>☁️ {textos[idioma].clima.descripcion}: {clima.descripcion}</p>
                 <img
                   src={`https://openweathermap.org/img/wn/${clima.icono}@2x.png`}
                   alt="icono clima"
@@ -80,7 +83,7 @@ const MapaPeru = () => {
                 />
               </>
             ) : (
-              <p>Haz clic para ver el clima</p>
+              <p>{textos[idioma].clima.hazClick}</p>
             )}
           </Popup>
         </Marker>

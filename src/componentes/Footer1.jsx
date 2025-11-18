@@ -1,30 +1,33 @@
 import React from "react";
-import { GlobalProvider } from "./ContextoGlobal.jsx";
-
-
-import "../style.css"; // Asegúrate de tener los estilos o agregarlos al final
+import { useGlobal } from "./ContextoGlobal.jsx";
+import { textos } from "../data/traducciones.js";
+import "../style.css";
 
 function Footer() {
+  const { idioma } = useGlobal();
+  const t = textos[idioma].footer;
+
   return (
     <footer className="footer">
       <div className="footer-content">
+
         {/* --- Sección Contacto --- */}
         <div className="footer-section">
           <h3>
-            <i className="fa-solid fa-headset icon-footer-title"></i> Contáctanos
+            <i className="fa-solid fa-headset icon-footer-title"></i> {t.contactanos}
           </h3>
           <p>
-            <i className="fa-solid fa-phone icon-footer"></i> Teléfono: (01) 6167300
+            <i className="fa-solid fa-phone icon-footer"></i> {t.telefono}: (01) 6167300
           </p>
           <p>
-            <i className="fa-solid fa-at icon-footer"></i> Email: info@promperu.gob.pe
+            <i className="fa-solid fa-at icon-footer"></i> {t.email}: info@promperu.gob.pe
           </p>
         </div>
 
-        {/* --- Sección Redes Sociales --- */}
+        {/* --- Redes Sociales --- */}
         <div className="footer-section">
           <h3>
-            <i className="fa-solid fa-share-alt icon-footer-title"></i> Redes Sociales
+            <i className="fa-solid fa-share-alt icon-footer-title"></i> {t.redes}
           </h3>
           <ul>
             <li>
@@ -33,35 +36,38 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <i className="fa-brands fa-youtube icon-social"></i> YouTube: @promPeru
+                <i className="fa-brands fa-youtube icon-social"></i> {t.youtube}
               </a>
             </li>
+
             <li>
               <a
                 href="https://www.facebook.com/promperu"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <i className="fa-brands fa-facebook icon-social"></i> Facebook: PromPeru Official
+                <i className="fa-brands fa-facebook icon-social"></i> {t.facebook}
               </a>
             </li>
+
             <li>
               <a
                 href="https://www.instagram.com/promperu.oficial"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <i className="fa-brands fa-instagram icon-social"></i> Instagram: @promperu
+                <i className="fa-brands fa-instagram icon-social"></i> {t.instagram}
               </a>
             </li>
           </ul>
         </div>
 
-        {/* --- Sección Ubicación --- */}
+        {/* --- Ubicación --- */}
         <div className="footer-section">
           <h3>
-            <i className="fa-solid fa-location-dot icon-footer-title"></i> Canales de Atención
+            <i className="fa-solid fa-location-dot icon-footer-title"></i> {t.canales}
           </h3>
+
           <p>
             <a
               href="https://www.google.com/maps/place/Ministerio+de+Comercio+Exterior+y+Turismo+del+Perú+(MINCETUR)/@-12.0971593,-77.0168962,16z"
@@ -69,11 +75,12 @@ function Footer() {
               rel="noopener noreferrer"
               style={{ color: "inherit", textDecoration: "none" }}
             >
-              <i className="fa-solid fa-map-marker-alt icon-footer"></i> Sede Central - Calle 1 Oeste,
-              N° 50, pisos 13 y 14 - Edificio MINCETUR-PRODUCE - San Isidro - Lima
+              <i className="fa-solid fa-map-marker-alt icon-footer"></i>
+              {t.direccion}
             </a>
           </p>
         </div>
+
       </div>
     </footer>
   );

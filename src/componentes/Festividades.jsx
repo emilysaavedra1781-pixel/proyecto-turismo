@@ -1,47 +1,43 @@
 import React from "react";
+import { textos } from "../data/traducciones.js";
+import { useGlobal } from "./ContextoGlobal.jsx";
 
 export default function Festividades() {
+  const { idioma } = useGlobal();
+  const t = textos[idioma].festividades;
+
   return (
     <section className="blog-container">
-      <h2>Perú en sus Festividades</h2>
-      <p>
-        "Perú combina patrimonio milenario, devoción viva y rituales que conectan lo ancestral
-        y lo contemporáneo. Desde la majestuosidad del Inti Raymi en Cusco y el colorido fervor
-        de la Fiesta de la Candelaria en Puno hasta la espiritualidad que fluye por
-        la peregrinación de Quyllurit’i, cada tradición revela la riqueza cultural y
-        la pasión de un país que celebra su historia con orgullo."
-      </p>
+      <h2>{t.titulo}</h2>
+
+      <p>{t.parrafo_intro}</p>
 
       <div className="blog-content">
+
+        {/* INTI RAYMI */}
         <div className="blog-item">
-          <img src="Imagen/images (3).jpeg" alt="" />
-          <h3>Inti Raymi – El Festival del Sol</h3>
-          <p>
-            Celebrado cada 24 de junio en Cusco, este ritual incaico honra al dios Inti
-            (el Sol) con danzas, rituales, música ancestral y trajes coloridos.
-          </p>
+          <img src="Imagen/images (3).jpeg" alt="Inti Raymi" />
+          <h3>{t.inti_titulo}</h3>
+          <p>{t.inti_desc}</p>
         </div>
 
+        {/* CANDELARIA */}
         <div className="blog-item">
-          <img src="Imagen/calendaria.jpg" alt="" />
-          <h3>Fiesta de la Virgen de la Candelaria (Puno)</h3>
-          <p>
-            Cada febrero, Puno se llena de color y fe durante esta festividad declarada Patrimonio Cultural
-            Inmaterial de la Humanidad. Participan más de 100,000 danzarines y 10,000 músicos.
-          </p>
+          <img src="Imagen/calendaria.jpg" alt="Candelaria" />
+          <h3>{t.candelaria_titulo}</h3>
+          <p>{t.candelaria_desc}</p>
         </div>
 
+        {/* QUYLLURIT’I */}
         <div className="blog-item">
-          <img src="Imagen/Peregrinacion-al-Senor-de-Qoyllur-Riti.webp" alt="" />
-          <h3>Quyllurit’i – Peregrinación a la Montaña Sagrada</h3>
-          <p>
-            Miles de peregrinos de comunidades quechua y aimara suben al nevado Ausangate
-            en una fusión ancestral de cosmovisión andina y fe católica.
-          </p>
+          <img src="Imagen/Peregrinacion-al-Senor-de-Qoyllur-Riti.webp" alt="Quyllurit’i" />
+          <h3>{t.quyllur_titulo}</h3>
+          <p>{t.quyllur_desc}</p>
         </div>
+
       </div>
 
-      <a href="#" className="btn-1">Información</a>
+      <a href="#" className="btn-1">{t.boton_info}</a>
     </section>
   );
 }

@@ -3,33 +3,29 @@ import MapaPeru from "./MapaPeru";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../style.css";
-import Carrusel from './Carrusel'; // o la ruta correcta
-
+import Carrusel from './Carrusel';
+import { useGlobal } from "./ContextoGlobal.jsx";
+import { textos } from "../data/traducciones.js";
 
 function Contexto() {
+  const { idioma } = useGlobal();
+
   return (
     <div className="contexto-container">
-      <h1>Contexto Turístico del Perú</h1>
+      <h1>{textos[idioma].contexto_titulo}</h1>
 
-      <p>
-        El Perú es un país lleno de diversidad cultural, geográfica y natural.
-        Cada región ofrece atractivos únicos, desde la costa hasta la selva.
-        A continuación puedes explorar el mapa para conocer más sobre cada zona.
-      </p>
+      <p>{textos[idioma].contexto_parrafo1}</p>
 
       {/* Mapa */}
       <div className="mapa-section">
         <MapaPeru />
       </div>
 
-      <p>
-        Haz clic en las regiones o marcadores para ver información del clima y
-        atractivos turísticos.
-      </p>
+      <p>{textos[idioma].contexto_parrafo2}</p>
 
-      {/* Carrusel agregado aquí */}
+      {/* Carrusel */}
       <div className="carousel-section">
-        <h3>Galería de Imágenes Turísticas</h3>
+        <h3>{textos[idioma].contexto_galeria}</h3>
         <Carrusel />
       </div>
     </div>

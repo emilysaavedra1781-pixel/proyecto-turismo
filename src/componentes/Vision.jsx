@@ -1,6 +1,10 @@
 import React from "react";
+import { useGlobal } from "./ContextoGlobal";
+import { textos } from "../data/traducciones";
 
 export default function Vision() {
+  const { idioma } = useGlobal();
+
   return (
     <section className="Logistica">
       <div className="Logistica-3">
@@ -11,12 +15,8 @@ export default function Vision() {
       </div>
 
       <div className="Logistica-1">
-        <h2>Visión</h2>
-        <p>
-          Ser una plataforma digital de referencia para la promoción turística de los principales
-          destinos del Perú, fortaleciendo la identidad nacional y contribuyendo al posicionamiento
-          del país como uno de los destinos más visitados de Sudamérica.
-        </p>
+        <h2>{textos[idioma].vision_titulo}</h2>
+        <p>{textos[idioma].vision_parrafo}</p>
       </div>
     </section>
   );

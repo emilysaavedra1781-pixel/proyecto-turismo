@@ -1,15 +1,16 @@
 import React from "react";
+import { useGlobal } from "./ContextoGlobal";
+import { textos } from "../data/traducciones";
 
 export default function Mision() {
+  const { idioma } = useGlobal();
+
   return (
     <section className="Logistica">
       <div className="Logistica-1">
-        <h2>Misión</h2>
-        <p>
-          Brindar a los turistas nacionales e internacionales una plataforma web interactiva
-          y atractiva que difunda información clara, organizada y actualizada sobre los
-          10 departamentos más concurridos del Perú, promoviendo la diversidad cultural y natural del país.
-        </p>
+        <h2>{textos[idioma].mision_titulo}</h2>
+
+        <p>{textos[idioma].mision_descripcion}</p>
       </div>
 
       <div className="Logistica-2">
