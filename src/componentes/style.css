@@ -1291,3 +1291,32 @@ body.modo-oscuro footer {
   color: #ccc;
 }
 
+.estrella-btn {
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  color: gold;
+}
+
+.review-box {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.review-box input,
+.review-box textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.review-list p {
+  background: #f4f4f4;
+  padding: 6px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
