@@ -10,9 +10,9 @@ export function useTraducciones(idioma) {
       setCargando(true);
 
       const { data, error } = await supabase
-        .from("traducciones") // nombre de tu tabla
+        .from("traducciones") 
         .select("*")
-        .eq("idioma", idioma); // filtra por idioma
+        .eq("idioma", idioma); 
 
       if (error) {
         console.error("Error cargando traducciones:", error);
@@ -20,7 +20,6 @@ export function useTraducciones(idioma) {
         return;
       }
 
-      // convierte el JSON guardado a objeto
       const traduccion = data[0]?.texto_json ? JSON.parse(data[0].texto_json) : null;
 
       setTextos(traduccion);
