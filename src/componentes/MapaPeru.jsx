@@ -23,7 +23,7 @@ const ciudades = [
 const MapaPeru = () => {
   const { idioma } = useGlobal();
   const [clima, setClima] = useState({});
-  const apiKey = "ee149b62f36cda80294e58901347ca88";  // 🔑 pon tu clave de OpenWeather
+  const apiKey = "hola mundo";  // 🔑 pon tu clave de OpenWeather
 
   // 🔍 Consultar clima de la ciudad
   const obtenerClima = async (ciudad) => {
