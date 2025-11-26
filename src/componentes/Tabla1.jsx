@@ -1,6 +1,6 @@
 import React from "react";
 import "../style.css";
-import Persona2 from "./Persona2";
+
 import { useGlobal } from "./ContextoGlobal";
 import { textos } from "../data/traducciones";
 
@@ -11,7 +11,7 @@ export default function Tabla() {
 
   return (
     <>
-      <Persona2 />
+   
 
       <section className="seccion-tabla mostrar-tabla">
         <h2>{textos[idioma].tabla_titulo}</h2>

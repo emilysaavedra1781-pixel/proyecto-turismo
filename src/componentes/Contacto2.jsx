@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useGlobal } from "./ContextoGlobal.jsx";
+import { supabase } from "./supabaseClient";
+
+
 
 // 📊 Importación de Chart.js
 import { Bar } from "react-chartjs-2";
@@ -109,7 +112,8 @@ const Contacto = () => {
         validate(name, value);
     };
 
-    const handleSubmit = e => {
+    // 🚀 ENVÍO A SUPABASE
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitStatus(null);
 
@@ -118,15 +122,33 @@ const Contacto = () => {
             if (validate(field, formData[field])) isValid = false;
         });
 
-        if (isValid) {
-            setTimeout(() => {
-                setSubmitStatus("success");
-                setFormData({ nombre: '', correo: '', mensaje: '' });
-                setErrors({});
-            }, 800);
-        } else {
+        if (!isValid) {
             setSubmitStatus("error");
+            return;
         }
+
+        // ⬆ Guardar en Supabase
+      const { error } = await supabase
+    .from("contacto")   // ✔️ nombre real de tu tabla
+    .insert([
+        {
+            nombre: formData.nombre,
+            correo: formData.correo,
+            opinion: formData.mensaje   // ✔️ tu tabla usa "opinion"
+        }
+    ]);
+
+
+        if (error) {
+            console.error("Error al guardar en Supabase:", error);
+            setSubmitStatus("error");
+            return;
+        }
+
+        // ✔ Éxito
+        setSubmitStatus("success");
+        setFormData({ nombre: '', correo: '', mensaje: '' });
+        setErrors({});
     };
 
     // 🎨 Estilos
