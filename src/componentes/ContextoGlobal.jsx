@@ -19,7 +19,7 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     async function obtenerTraducciones() {
-      const { data, error } = await supabase.from("Traducciones").select("*");
+      const { data, error } = await supabase.from("traducciones").select("*");
 
       if (error) {
         console.error("❌ Error al obtener traducciones:", error);

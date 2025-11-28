@@ -4,7 +4,7 @@ import L from "leaflet";
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import { useGlobal } from "./ContextoGlobal";
-import { textos } from "../data/traducciones";
+import "../style.css";
 
 // 📍 Coordenadas principales de 10 regiones del Perú
 const ciudades = [
@@ -21,14 +21,19 @@ const ciudades = [
 ];
 
 const MapaPeru = () => {
-  const { idioma } = useGlobal();
+  const { idioma, traducciones } = useGlobal();
   const [clima, setClima] = useState({});
   const apiKey = "hola mundo";  // 🔑 pon tu clave de OpenWeather
+
+  // ⚠️ Evitar errores si aún no cargan traducciones
+ if (!traducciones) return <p>Cargando...</p>;
+
+  const t = (clave) => traducciones[clave]?.[idioma] || "";
 
   // 🔍 Consultar clima de la ciudad
   const obtenerClima = async (ciudad) => {
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${ciudad.lat}&lon=${ciudad.lon}&appid=${apiKey}&units=metric&lang=es`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${ciudad.lat}&lon=${ciudad.lon}&appid=${apiKey}&units=metric&lang=${idioma}`;
       const { data } = await axios.get(url);
 
       setClima({
@@ -43,7 +48,7 @@ const MapaPeru = () => {
     }
   };
 
-  // 📍 Icono de marcador (se puede cambiar luego por colores)
+  // 📍 Icono de marcador
   const icono = new L.Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
     iconSize: [32, 32],
@@ -71,11 +76,13 @@ const MapaPeru = () => {
         >
           <Popup>
             <h3>{ciudad.nombre}</h3>
+
             {clima.nombre === ciudad.nombre ? (
               <>
-                <p>🌡️ {textos[idioma].clima.temperatura}: {clima.temp} °C</p>
-                <p>💧 {textos[idioma].clima.humedad}: {clima.humedad}%</p>
-                <p>☁️ {textos[idioma].clima.descripcion}: {clima.descripcion}</p>
+                <p>🌡️ {t("clima_temperatura")}: {clima.temp} °C</p>
+                <p>💧 {t("clima_humedad")}: {clima.humedad}%</p>
+                <p>☁️ {t("clima_descripcion")}: {clima.descripcion}</p>
+
                 <img
                   src={`https://openweathermap.org/img/wn/${clima.icono}@2x.png`}
                   alt="icono clima"
@@ -83,7 +90,7 @@ const MapaPeru = () => {
                 />
               </>
             ) : (
-              <p>{textos[idioma].clima.hazClick}</p>
+              <p>{t("clima_hazClick")}</p>
             )}
           </Popup>
         </Marker>
@@ -93,3 +100,4 @@ const MapaPeru = () => {
 };
 
 export default MapaPeru;
+

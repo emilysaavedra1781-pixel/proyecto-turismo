@@ -1,9 +1,13 @@
 import React from "react";
+import "../style.css";
 import { useGlobal } from "./ContextoGlobal";
-import { textos } from "../data/traducciones";
 
 export default function Intro() {
-  const { idioma } = useGlobal(); // ← controla ES / EN
+  const { idioma, traducciones } = useGlobal();
+
+   if (!traducciones) return <p>Cargando...</p>;
+
+  const t = (clave) => traducciones[clave]?.[idioma] || "";
 
   return (
     <section id="Intro" className="intro">
@@ -12,10 +16,10 @@ export default function Intro() {
         style={{ paddingTop: "15px", paddingLeft: "15px", paddingRight: "15px" }}
       >
         {/* TITULO PRINCIPAL */}
-        <h2>{textos[idioma].intro_titulo}</h2>
+        <h2>{t("intro_titulo")}</h2>
 
         {/* PARRAFO PRINCIPAL */}
-        <p className="txt-p">{textos[idioma].intro_parrafo}</p>
+        <p className="txt-p">{t("intro_parrafo")}</p>
       </div>
 
       {/* TARJETAS */}
@@ -24,22 +28,22 @@ export default function Intro() {
         {/* TARJETA 1 - Música */}
         <div className="intro-1 text-center p-4 rounded-2xl shadow">
           <img src="Imagen/musica-como-identidad-1024x1024-removebg-preview.png" alt="Musica" className="mx-auto" />
-          <h3 className="text-xl font-semibold mt-3">{textos[idioma].intro_musica_titulo}</h3>
-          <p>{textos[idioma].intro_musica_desc}</p>
+          <h3 className="text-xl font-semibold mt-3">{t("intro_musica_titulo")}</h3>
+          <p>{t("intro_musica_desc")}</p>
         </div>
 
         {/* TARJETA 2 - Historia */}
         <div className="intro-1 text-center p-4 rounded-2xl shadow">
           <img src="Imagen/Fondo_3-removebg-preview.png" alt="Historia" className="mx-auto" />
-          <h3 className="text-xl font-semibold mt-3">{textos[idioma].intro_historia_titulo}</h3>
-          <p>{textos[idioma].intro_historia_desc}</p>
+          <h3 className="text-xl font-semibold mt-3">{t("intro_historia_titulo")}</h3>
+          <p>{t("intro_historia_desc")}</p>
         </div>
 
         {/* TARJETA 3 - Gastronomía */}
         <div className="intro-1 text-center p-4 rounded-2xl shadow">
           <img src="Imagen/ceviche.png" alt="Gastronomía" className="mx-auto" />
-          <h3 className="text-xl font-semibold mt-3">{textos[idioma].intro_gastronomia_titulo}</h3>
-          <p>{textos[idioma].intro_gastronomia_desc}</p>
+          <h3 className="text-xl font-semibold mt-3">{t("intro_gastronomia_titulo")}</h3>
+          <p>{t("intro_gastronomia_desc")}</p>
         </div>
       </div>
 
@@ -49,9 +53,10 @@ export default function Intro() {
           className="btn-1 px-6 py-2 rounded-xl shadow bg-blue-500 text-white"
           onClick={() => mostrarDepartamento()}
         >
-          {textos[idioma].intro_boton}
+          {t("intro_boton")}
         </button>
       </div>
     </section>
   );
 }
+

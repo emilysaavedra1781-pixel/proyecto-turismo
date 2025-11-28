@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import DepartamentosDetalle from "./DepartamentosDetalle";
 import "../style.css";
 import { useGlobal } from "./ContextoGlobal.jsx";
-import { textos } from "../data/traducciones.js";
 
 export default function Departamentos() {
-  const [mostrarDetalle, setMostrarDetalle] = useState(false);
-  const { idioma } = useGlobal();
+  const { idioma, traducciones } = useGlobal();
 
-  // --------------------------
-  // ⭐ FAVORITOS (localStorage)
-  // --------------------------
+  if (!traducciones || Object.keys(traducciones).length === 0) {
+    return <p>Cargando contenidos...</p>;
+  }
+
+  const t = traducciones;
+
+  const [mostrarDetalle, setMostrarDetalle] = useState(false);
+
+  // ⭐ FAVORITOS 
   const [favoritos, setFavoritos] = useState([]);
 
   useEffect(() => {
@@ -19,13 +23,9 @@ export default function Departamentos() {
   }, []);
 
   function toggleFavorito(nombre) {
-    let nuevosFav = [];
-
-    if (favoritos.includes(nombre)) {
-      nuevosFav = favoritos.filter((f) => f !== nombre);
-    } else {
-      nuevosFav = [...favoritos, nombre];
-    }
+    const nuevosFav = favoritos.includes(nombre)
+      ? favoritos.filter((f) => f !== nombre)
+      : [...favoritos, nombre];
 
     setFavoritos(nuevosFav);
     localStorage.setItem("favoritos", JSON.stringify(nuevosFav));
@@ -39,25 +39,25 @@ export default function Departamentos() {
     setMostrarDetalle(true);
   }
 
-  // Lista de departamentos (para evitar repetir código)
+  // 📌 LISTA DE DEPARTAMENTOS CON TRADUCCIÓN
   const departamentos = [
-    { nombre: "Cusco", img: "Imagen/cusco.jpg", desc: textos[idioma].departamentos_lista.cusco_desc },
-    { nombre: "Lima", img: "Imagen/lima.jpg", desc: textos[idioma].departamentos_lista.lima_desc },
-    { nombre: "Puno", img: "Imagen/puno.jpeg", desc: textos[idioma].departamentos_lista.puno_desc },
-    { nombre: "Arequipa", img: "Imagen/d4.jpg", desc: textos[idioma].departamentos_lista.arequipa_desc },
-    { nombre: "Ica", img: "Imagen/ica.jpeg", desc: textos[idioma].departamentos_lista.ica_desc },
-    { nombre: "Lambayeque", img: "Imagen/ciudad-de-chiclayo-23nov20-card.webp", desc: textos[idioma].departamentos_lista.lambayeque_desc },
-    { nombre: "Loreto", img: "Imagen/04231eca-42e5-4b00-9e7a-b093240dc642.jpg", desc: textos[idioma].departamentos_lista.loreto_desc },
-    { nombre: "San Martín", img: "Imagen/San-Martín-Portada.jpg", desc: textos[idioma].departamentos_lista.sanmartin_desc },
-    { nombre: "Junín", img: "Imagen/junin.jpeg", desc: textos[idioma].departamentos_lista.junin_desc },
-    { nombre: "Ayacucho", img: "Imagen/ayacucho.jpg", desc: textos[idioma].departamentos_lista.ayacucho_desc },
+    { nombre: "Cusco", img: "Imagen/cusco.jpg", desc: t.departamentos_lista_cusco_desc?.[idioma] },
+    { nombre: "Lima", img: "Imagen/lima.jpg", desc: t.departamentos_lista_lima_desc?.[idioma] },
+    { nombre: "Puno", img: "Imagen/puno.jpeg", desc: t.departamentos_lista_puno_desc?.[idioma] },
+    { nombre: "Arequipa", img: "Imagen/d4.jpg", desc: t.departamentos_lista_arequipa_desc?.[idioma] },
+    { nombre: "Ica", img: "Imagen/ica.jpeg", desc: t.departamentos_lista_ica_desc?.[idioma] },
+    { nombre: "Lambayeque", img: "Imagen/ciudad-de-chiclayo-23nov20-card.webp", desc: t.departamentos_lista_lambayeque_desc?.[idioma] },
+    { nombre: "Loreto", img: "Imagen/04231eca-42e5-4b00-9e7a-b093240dc642.jpg", desc: t.departamentos_lista_loreto_desc?.[idioma] },
+    { nombre: "San Martín", img: "Imagen/San-Martín-Portada.jpg", desc: t.departamentos_lista_sanmartin_desc?.[idioma] },
+    { nombre: "Junín", img: "Imagen/junin.jpeg", desc: t.departamentos_lista_junin_desc?.[idioma] },
+    { nombre: "Ayacucho", img: "Imagen/ayacucho.jpg", desc: t.departamentos_lista_ayacucho_desc?.[idioma] },
   ];
 
   return (
     <div className="container">
       {!mostrarDetalle && (
         <section id="departamentos" className="departamentos container">
-          <h1>{textos[idioma].departamentos_titulo}</h1>
+          <h1>{t.departamentos_titulo?.[idioma]}</h1>
 
           <div className="departamentos-grid">
             {departamentos.map((dep) => (
@@ -76,7 +76,7 @@ export default function Departamentos() {
                 </button>
 
                 <button className="btn-1" onClick={mostrarDetalleDepartamento}>
-                  {textos[idioma].departamentos_verMas}
+                  {t.departamentos_verMas?.[idioma]}
                 </button>
               </div>
             ))}
@@ -88,3 +88,5 @@ export default function Departamentos() {
     </div>
   );
 }
+
+

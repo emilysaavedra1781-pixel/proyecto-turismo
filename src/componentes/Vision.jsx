@@ -1,9 +1,13 @@
 import React from "react";
+import "../style.css";
 import { useGlobal } from "./ContextoGlobal";
-import { textos } from "../data/traducciones";
 
 export default function Vision() {
-  const { idioma } = useGlobal();
+  const { idioma, traducciones } = useGlobal();
+
+  if (!traducciones) return <p>Cargando...</p>;
+
+  const t = (clave) => traducciones[clave]?.[idioma] || "";
 
   return (
     <section className="Logistica">
@@ -15,9 +19,10 @@ export default function Vision() {
       </div>
 
       <div className="Logistica-1">
-        <h2>{textos[idioma].vision_titulo}</h2>
-        <p>{textos[idioma].vision_parrafo}</p>
+        <h2>{t("vision_titulo")}</h2>
+        <p>{t("vision_parrafo")}</p>
       </div>
     </section>
   );
 }
+

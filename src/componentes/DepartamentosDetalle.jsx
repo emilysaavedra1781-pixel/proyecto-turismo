@@ -1,146 +1,110 @@
 import React, { useState } from "react";
-import { textos } from "../data/traducciones.js";
+import "../style.css";
 import { useGlobal } from "./ContextoGlobal.jsx";
 
 export default function DepartamentosDetalle() {
-  const { idioma } = useGlobal();
-  const t = textos[idioma].departamentos_detalle;
+  const { idioma, traducciones } = useGlobal();
 
-  // -------------------------------
-  // 💬 SISTEMA DE RESEÑAS (useState)
-  // -------------------------------
-  const [reviews, setReviews] = useState({
-    Cusco: [],
-    Lima: [],
-    Puno: [],
-    Arequipa: [],
-    Ica: [],
-    Lambayeque: [],
-    Loreto: [],
-    "San Martín": [],
-    Junín: [],
-    Ayacucho: [],
-  });
+  if (!traducciones || Object.keys(traducciones).length === 0) {
+    return <p>Cargando...</p>;
+  }
 
-  const [form, setForm] = useState({ nombre: "", comentario: "" });
+  const t = (clave) => traducciones[clave]?.[idioma] || "";
+  const res = (clave) => traducciones[`resenas_${clave}`]?.[idioma] || "";
 
-  function enviarReseña(destino) {
-    if (!form.nombre || !form.comentario) return;
-
-    const nueva = { nombre: form.nombre, comentario: form.comentario };
-
-    setReviews({
-      ...reviews,
-      [destino]: [...reviews[destino], nueva],
+  // 🔹 PLANTILLA PARA CADA DEPARTAMENTO
+  function TarjetaDetalle({ nombre, prefijo, img }) {
+    const [reviews, setReviews] = useState(() => {
+      const guardadas = localStorage.getItem(`reviews_${nombre}`);
+      return guardadas ? JSON.parse(guardadas) : [];
     });
 
-    setForm({ nombre: "", comentario: "" });
-  }
+    const [form, setForm] = useState({ nombre: "", comentario: "" });
 
-  // ---------
-  // Plantilla
-  // ---------
-function TarjetaDetalle({ nombre, datos, img }) {
+    function enviarReseña() {
+      if (!form.nombre || !form.comentario) return;
 
-  // 🔥 Cargar reseñas desde localStorage al iniciar
-  const [reviews, setReviews] = useState(() => {
-    const guardadas = localStorage.getItem(`reviews_${nombre}`);
-    return guardadas ? JSON.parse(guardadas) : [];
-  });
+      const nueva = { nombre: form.nombre, comentario: form.comentario };
+      const nuevasReseñas = [...reviews, nueva];
 
-  // 🔥 Formulario interno
-  const [form, setForm] = useState({ nombre: "", comentario: "" });
+      setReviews(nuevasReseñas);
+      localStorage.setItem(`reviews_${nombre}`, JSON.stringify(nuevasReseñas));
+      setForm({ nombre: "", comentario: "" });
+    }
 
-  // 🔥 Función para enviar reseña
-  function enviarReseña() {
-    if (!form.nombre || !form.comentario) return;
+    return (
+      <div className="departamento-detalle">
+        <img src={img} alt={nombre} />
 
-    const nueva = { nombre: form.nombre, comentario: form.comentario };
+        <div className="departamento-texto">
+          <h1>{t(`${prefijo}_titulo`)}</h1>
 
-    const nuevasReseñas = [...reviews, nueva];
+          <h2>{t(`${prefijo}_sub_caracteristicas`)}</h2>
+          <p>{t(`${prefijo}_caracteristicas`)}</p>
 
-    setReviews(nuevasReseñas);
+          <h2>{t(`${prefijo}_sub_gastronomia`)}</h2>
+          <p>{t(`${prefijo}_gastronomia`)}</p>
 
-    // 🔥 Guardar en localStorage
-    localStorage.setItem(`reviews_${nombre}`, JSON.stringify(nuevasReseñas));
+          <h2>{t(`${prefijo}_sub_festividades`)}</h2>
+          <p>{t(`${prefijo}_festividades`)}</p>
 
-    // Limpiar formulario
-    setForm({ nombre: "", comentario: "" });
-  }
+          <h2>{t(`${prefijo}_sub_hoteles`)}</h2>
+          <p>
+            {t(`${prefijo}_hoteles`)}{" "}
+            <a href="https://www.booking.com" target="_blank" rel="noopener noreferrer">
+              Booking.com
+            </a>
+          </p>
 
-  return (
-    <div className="departamento-detalle">
+          {/* Reseñas */}
+          <div className="review-box">
+            <h3>{res("titulo")}</h3>
 
-      <img src={img} alt={nombre} />
+            <input
+              type="text"
+              placeholder={res("nombre")}
+              value={form.nombre}
+              onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+            />
 
-      <div className="departamento-texto">
-        <h1>{datos.titulo}</h1>
+            <textarea
+              placeholder={res("comentario")}
+              value={form.comentario}
+              onChange={(e) => setForm({ ...form, comentario: e.target.value })}
+            ></textarea>
 
-        <h2>{datos.sub_caracteristicas}</h2>
-        <p>{datos.caracteristicas}</p>
+            <button className="btn-1" type="button" onClick={enviarReseña}>
+              {res("boton")}
+            </button>
 
-        <h2>{datos.sub_gastronomia}</h2>
-        <p>{datos.gastronomia}</p>
-
-        <h2>{datos.sub_festividades}</h2>
-        <p>{datos.festividades}</p>
-
-        <h2>{datos.sub_hoteles}</h2>
-        <p>
-          {datos.hoteles}{" "}
-          <a href="https://www.booking.com" target="_blank" rel="noopener noreferrer">
-            Booking.com
-          </a>
-        </p>
-
-        {/* 💬 FORMULARIO DE RESEÑAS */}
-        <div className="review-box">
-          <h3>Reseñas</h3>
-
-          <input
-            type="text"
-            placeholder="Tu nombre"
-            value={form.nombre}
-            onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-          />
-
-          <textarea
-            placeholder="Escribe un comentario"
-            value={form.comentario}
-            onChange={(e) => setForm({ ...form, comentario: e.target.value })}
-          ></textarea>
-
-          <button className="btn-1" type="button" onClick={enviarReseña}>
-            Enviar
-          </button>
-
-          {/* Lista de reseñas */}
-          <div className="review-list">
-            {reviews.map((r, i) => (
-              <p key={i}>
-                <strong>{r.nombre}:</strong> {r.comentario}
-              </p>
-            ))}
+            <div className="review-list">
+              {reviews.map((r, i) => (
+                <p key={i}>
+                  <strong>{r.nombre}:</strong> {r.comentario}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-
+  // 🔹 LISTA DE TARJETAS
   return (
     <section className="departamento-detalle-container">
-      <TarjetaDetalle nombre="Cusco" datos={t.cusco} img="Imagen/cusco.jpg" />
-      <TarjetaDetalle nombre="Lima" datos={t.lima} img="Imagen/lima.jpg" />
-      <TarjetaDetalle nombre="Puno" datos={t.puno} img="Imagen/puno.jpeg" />
-      <TarjetaDetalle nombre="Arequipa" datos={t.arequipa} img="Imagen/d4.jpg" />
-      <TarjetaDetalle nombre="Ica" datos={t.ica} img="Imagen/ica.jpeg" />
-      <TarjetaDetalle nombre="Lambayeque" datos={t.lambayeque} img="Imagen/Lambayeque.jpg" />
-      <TarjetaDetalle nombre="Loreto" datos={t.loreto} img="Imagen/Loreto.jpg" />
-      <TarjetaDetalle nombre="San Martín" datos={t.sanmartin} img="Imagen/San Martin.jpg" />
-      <TarjetaDetalle nombre="Junín" datos={t.junin} img="Imagen/Junin.jpg" />
-      <TarjetaDetalle nombre="Ayacucho" datos={t.ayacucho} img="Imagen/Ayacucho1.jpg" />
+      <TarjetaDetalle nombre="Cusco" prefijo="dep_cusco" img="Imagen/cusco.jpg" />
+      <TarjetaDetalle nombre="Lima" prefijo="dep_lima" img="Imagen/lima.jpg" />
+      <TarjetaDetalle nombre="Puno" prefijo="dep_puno" img="Imagen/puno.jpeg" />
+      <TarjetaDetalle nombre="Arequipa" prefijo="dep_arequipa" img="Imagen/d4.jpg" />
+      <TarjetaDetalle nombre="Ica" prefijo="dep_ica" img="Imagen/ica.jpeg" />
+      <TarjetaDetalle nombre="Lambayeque" prefijo="dep_lambayeque" img="Imagen/Lambayeque.jpg" />
+      <TarjetaDetalle nombre="Loreto" prefijo="dep_loreto" img="Imagen/Loreto.jpg" />
+      <TarjetaDetalle nombre="San Martín" prefijo="dep_sanmartin" img="Imagen/San Martin.jpg" />
+      <TarjetaDetalle nombre="Junín" prefijo="dep_junin" img="Imagen/Junin.jpg" />
+      <TarjetaDetalle nombre="Ayacucho" prefijo="dep_ayacucho" img="Imagen/Ayacucho1.jpg" />
     </section>
   );
 }
+
+

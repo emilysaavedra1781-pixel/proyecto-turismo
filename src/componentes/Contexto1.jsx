@@ -1,31 +1,32 @@
 import React from "react";
 import MapaPeru from "./MapaPeru";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import "../style.css";
-import Carrusel from './Carrusel';
+import Carrusel from "./Carrusel";
 import { useGlobal } from "./ContextoGlobal.jsx";
-import { textos } from "../data/traducciones.js";
 
 function Contexto() {
-  const { idioma } = useGlobal();
+  const { idioma, traducciones } = useGlobal();
+
+ if (!traducciones) return <p>Cargando...</p>;
+
+  const t = (clave) => traducciones[clave]?.[idioma] || "";
 
   return (
     <div className="contexto-container">
-      <h1>{textos[idioma].contexto_titulo}</h1>
+      <h1>{t("contexto_titulo")}</h1>
 
-      <p>{textos[idioma].contexto_parrafo1}</p>
+      <p>{t("contexto_parrafo1")}</p>
 
-      {/* Mapa */}
+      {/* 📍 Mapa */}
       <div className="mapa-section">
         <MapaPeru />
       </div>
 
-      <p>{textos[idioma].contexto_parrafo2}</p>
+      <p>{t("contexto_parrafo2")}</p>
 
-      {/* Carrusel */}
+      {/* 🖼️ Carrusel */}
       <div className="carousel-section">
-        <h3>{textos[idioma].contexto_galeria}</h3>
+        <h3>{t("contexto_galeria")}</h3>
         <Carrusel />
       </div>
     </div>
