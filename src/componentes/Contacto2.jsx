@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useGlobal } from "./ContextoGlobal.jsx";
 import { supabase } from "./supabaseClient";
-await enviarBienvenida(formData.correo, formData.nombre);
-
-
+import enviarBienvenida from "./enviarBienvenida.js";
 
 
 // 📊 Importación de Chart.js
@@ -148,7 +146,8 @@ const Contacto = () => {
         }
 
         // 📩 Enviar correo de bienvenida
-        await enviarBienvenida(formData.correo);
+await enviarBienvenida(formData.correo, formData.nombre);
+
 
 
         // ✔ Éxito
