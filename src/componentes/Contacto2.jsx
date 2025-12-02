@@ -3,7 +3,6 @@ import { useGlobal } from "./ContextoGlobal.jsx";
 import { supabase } from "./supabaseClient";
 import enviarBienvenida from "./enviarBienvenida.js";
 
-
 // 📊 Importación de Chart.js
 import { Bar } from "react-chartjs-2";
 import {
@@ -28,47 +27,21 @@ const Contacto = () => {
     const [errors, setErrors] = useState({});
     const [submitStatus, setSubmitStatus] = useState(null);
 
-    const { idioma } = useGlobal();
+    // ⬅️ OBTENEMOS IDIOMA Y TRADUCCIONES DE SUPABASE
+    const { idioma, traducciones } = useGlobal();
 
-    const translations = {
-        es: {
-            title: 'Contáctanos para tu Viaje',
-            nameLabel: 'Tu Nombre',
-            emailLabel: 'Correo Electrónico',
-            messageLabel: 'Mensaje',
-            submitButton: 'Enviar Mensaje',
-            nameError: 'El nombre es obligatorio.',
-            emailError: 'Ingresa un correo válido (ejemplo@dominio.com).',
-            messageError: 'El mensaje debe tener al menos 10 caracteres.',
-            success: '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.',
-            error: 'Ocurrió un error. Por favor, revisa los campos con errores.',
-            chartTitle: "Turistas Nacionales e Internacionales por Departamento (2024)",
-            chartLabel: "Número de Turistas"
-        },
-        en: {
-            title: 'Contact Us for Your Trip',
-            nameLabel: 'Your Name',
-            emailLabel: 'Email Address',
-            messageLabel: 'Message',
-            submitButton: 'Send Message',
-            nameError: 'Name is required.',
-            emailError: 'Please enter a valid email (example@domain.com).',
-            messageError: 'Message must be at least 10 characters long.',
-            success: 'Message sent successfully! We will contact you shortly.',
-            error: 'An error occurred. Please check the fields for errors.',
-            chartTitle: "Domestic and International Tourists by Department (2024)",
-            chartLabel: "Number of Tourists"
-        }
-    };
+    if (!traducciones || Object.keys(traducciones).length === 0) {
+        return <p>Cargando contenidos...</p>;
+    }
 
-    const currentLang = translations[idioma];
+    const t = traducciones;
 
     // 📊 Datos de la gráfica
     const chartData = {
         labels: ["Lima", "Cusco", "Arequipa", "Puno", "Ica"],
         datasets: [
             {
-                label: currentLang.chartLabel,
+                label: t.contacto_grafico_label?.[idioma],
                 data: [120000, 85000, 60000, 45000, 30000],
                 backgroundColor: "rgba(54, 162, 235, 0.5)",
                 borderColor: "rgba(54, 162, 235, 1)",
@@ -83,7 +56,7 @@ const Contacto = () => {
             legend: { position: "top" },
             title: {
                 display: true,
-                text: currentLang.chartTitle,
+                text: t.contacto_grafico_titulo?.[idioma],
                 font: { size: 18 },
             },
         }
@@ -95,11 +68,11 @@ const Contacto = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (name === 'nombre' && !value.trim()) {
-            error = currentLang.nameError;
+            error = t.contacto_error_nombre?.[idioma];
         } else if (name === 'correo' && !emailRegex.test(value)) {
-            error = currentLang.emailError;
+            error = t.contacto_error_correo?.[idioma];
         } else if (name === 'mensaje' && value.length < 10) {
-            error = currentLang.messageError;
+            error = t.contacto_error_mensaje?.[idioma];
         }
 
         setErrors(prev => ({ ...prev, [name]: error }));
@@ -128,16 +101,15 @@ const Contacto = () => {
         }
 
         // ⬆ Guardar en Supabase
-      const { error } = await supabase
-    .from("contacto")   // ✔️ nombre real de tu tabla
-    .insert([
-        {
-            nombre: formData.nombre,
-            correo: formData.correo,
-            opinion: formData.mensaje   // ✔️ tu tabla usa "opinion"
-        }
-    ]);
-
+        const { error } = await supabase
+            .from("contacto")
+            .insert([
+                {
+                    nombre: formData.nombre,
+                    correo: formData.correo,
+                    opinion: formData.mensaje
+                }
+            ]);
 
         if (error) {
             console.error("Error al guardar en Supabase:", error);
@@ -146,9 +118,7 @@ const Contacto = () => {
         }
 
         // 📩 Enviar correo de bienvenida
-await enviarBienvenida(formData.correo, formData.nombre);
-
-
+        await enviarBienvenida(formData.correo, formData.nombre);
 
         // ✔ Éxito
         setSubmitStatus("success");
@@ -171,34 +141,36 @@ await enviarBienvenida(formData.correo, formData.nombre);
 
             {/* 📝 Formulario */}
             <div style={formStyle}>
-                <h2>{currentLang.title}</h2>
+                <h2>{t.contacto_titulo?.[idioma]}</h2>
 
                 {submitStatus === 'success' && (
                     <p style={{ color: 'green', background: '#e9ffe9', padding: '10px', borderRadius: '4px' }}>
-                        {currentLang.success}
+                        {t.contacto_envio_exito?.[idioma]}
                     </p>
                 )}
 
                 {submitStatus === 'error' && (
                     <p style={{ color: 'red', background: '#ffe9e9', padding: '10px', borderRadius: '4px' }}>
-                        {currentLang.error}
+                        {t.contacto_envio_error?.[idioma]}
                     </p>
                 )}
 
                 <form onSubmit={handleSubmit} noValidate>
-                    <label>{currentLang.nameLabel}</label>
+                    <label>{t.contacto_nombre_label?.[idioma]}</label>
                     <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} style={inputStyle} />
                     {errors.nombre && <p style={{ color: 'red' }}>{errors.nombre}</p>}
 
-                    <label>{currentLang.emailLabel}</label>
+                    <label>{t.contacto_correo_label?.[idioma]}</label>
                     <input type="email" name="correo" value={formData.correo} onChange={handleChange} style={inputStyle} />
                     {errors.correo && <p style={{ color: 'red' }}>{errors.correo}</p>}
 
-                    <label>{currentLang.messageLabel}</label>
+                    <label>{t.contacto_mensaje_label?.[idioma]}</label>
                     <textarea name="mensaje" value={formData.mensaje} onChange={handleChange} rows="5" style={inputStyle}></textarea>
                     {errors.mensaje && <p style={{ color: 'red' }}>{errors.mensaje}</p>}
 
-                    <button type="submit" style={buttonStyle}>{currentLang.submitButton}</button>
+                    <button type="submit" style={buttonStyle}>
+                        {t.contacto_boton_enviar?.[idioma]}
+                    </button>
                 </form>
             </div>
         </div>
@@ -206,3 +178,4 @@ await enviarBienvenida(formData.correo, formData.nombre);
 };
 
 export default Contacto;
+

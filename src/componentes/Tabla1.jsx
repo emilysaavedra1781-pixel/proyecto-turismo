@@ -10,6 +10,7 @@ export default function Tabla() {
   const t = (clave) => traducciones[clave]?.[idioma] || "";
 
   const filas = [
+    // ✔ EXISTENTES
     {
       dep: t("tabla_fila_lima_dep"),
       clima: t("tabla_fila_lima_clima"),
@@ -39,6 +40,37 @@ export default function Tabla() {
       clima: t("tabla_fila_ica_clima"),
       comida: t("tabla_fila_ica_comida"),
       destino: t("tabla_fila_ica_destino"),
+    },
+
+    {
+      dep: t("tabla_fila_lambayeque_dep"),
+      clima: t("tabla_fila_lambayeque_clima"),
+      comida: t("tabla_fila_lambayeque_comida"),
+      destino: t("tabla_fila_lambayeque_destino"),
+    },
+    {
+      dep: t("tabla_fila_loreto_dep"),
+      clima: t("tabla_fila_loreto_clima"),
+      comida: t("tabla_fila_loreto_comida"),
+      destino: t("tabla_fila_loreto_destino"),
+    },
+    {
+      dep: t("tabla_fila_sanmartin_dep"),
+      clima: t("tabla_fila_sanmartin_clima"),
+      comida: t("tabla_fila_sanmartin_comida"),
+      destino: t("tabla_fila_sanmartin_destino"),
+    },
+    {
+      dep: t("tabla_fila_junin_dep"),
+      clima: t("tabla_fila_junin_clima"),
+      comida: t("tabla_fila_junin_comida"),
+      destino: t("tabla_fila_junin_destino"),
+    },
+    {
+      dep: t("tabla_fila_ayacucho_dep"),
+      clima: t("tabla_fila_ayacucho_clima"),
+      comida: t("tabla_fila_ayacucho_comida"),
+      destino: t("tabla_fila_ayacucho_destino"),
     },
   ];
 
@@ -70,3 +102,4 @@ export default function Tabla() {
     </section>
   );
 }
+
