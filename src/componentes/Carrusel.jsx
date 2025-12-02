@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { useGlobal } from "./ContextoGlobal";
 
 export default function Carousel() {
   const { idioma, traducciones } = useGlobal();
 
- if (!traducciones) return <p>Cargando...</p>;
+  if (!traducciones) return <p>Cargando...</p>;
 
   const t = (clave) => traducciones[clave]?.[idioma] || "";
 
+  const [index, setIndex] = useState(0);
+
+  const total = 10;
+
+  const prevSlide = () => {
+    setIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
+  };
+
+  const nextSlide = () => {
+    setIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
+  };
+
   return (
     <div className="carousel-container">
-      <div className="carousel">
+
+      <div
+        className="carousel"
+        style={{
+          transform: `translateX(-${index * 100}%)`,
+          transition: "transform 0.5s ease-in-out",
+          display: "flex",
+          width: "100%",
+        }}
+      >
 
         <div className="carousel-item">
           <img src="/Imagen-carrusel/1.jpg" alt={t("carousel_1")} />
@@ -46,12 +67,33 @@ export default function Carousel() {
 
       </div>
 
-      <button className="carousel-button carousel-button-prev">⬅️</button>
-      <button className="carousel-button carousel-button-next">➡️</button>
+      <button
+        className="carousel-button carousel-button-prev"
+        onClick={prevSlide}
+      >
+        ⬅️
+      </button>
 
-      <div className="content-indicators" id="indicators"></div>
+      <button
+        className="carousel-button carousel-button-next"
+        onClick={nextSlide}
+      >
+        ➡️
+      </button>
+
+      <div className="content-indicators">
+        {[...Array(total)].map((_, i) => (
+          <span
+            key={i}
+            className={`indicator ${i === index ? "active" : ""}`}
+            onClick={() => setIndex(i)}
+          ></span>
+        ))}
+      </div>
+
     </div>
   );
 }
+
 
 

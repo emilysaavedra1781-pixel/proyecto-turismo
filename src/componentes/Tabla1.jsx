@@ -10,7 +10,6 @@ export default function Tabla() {
   const t = (clave) => traducciones[clave]?.[idioma] || "";
 
   const filas = [
-    // ✔ EXISTENTES
     {
       dep: t("tabla_fila_lima_dep"),
       clima: t("tabla_fila_lima_clima"),
