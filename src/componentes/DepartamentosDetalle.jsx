@@ -73,7 +73,7 @@ export default function DepartamentosDetalle() {
       <TarjetaDetalle nombre="Ica" prefijo="dep_ica" img="Imagen/ica.jpeg" /><Resenas departamento="Ica" />
       <TarjetaDetalle nombre="Lambayeque" prefijo="dep_lambayeque" img="Imagen/Lambayeque.jpg" /><Resenas departamento="Lambayeque" />
       <TarjetaDetalle nombre="Loreto" prefijo="dep_loreto" img="Imagen/Loreto.jpg" /><Resenas departamento="Loreto" />
-      <TarjetaDetalle nombre="San Martín" prefijo="dep_sanmartin" img="Imagen/San Martin.jpg" /><Resenas departamento="San Martín" />
+      <TarjetaDetalle nombre="San Martín" prefijo="dep_sanmartin" img="Imagen/San-Martin.jpg" /><Resenas departamento="San Martín" />
       <TarjetaDetalle nombre="Junín" prefijo="dep_junin" img="Imagen/Junin.jpg" /><Resenas departamento="Junín" />
       <TarjetaDetalle nombre="Ayacucho" prefijo="dep_ayacucho" img="Imagen/Ayacucho1.jpg" /><Resenas departamento="Ayacucho" />
     </section>
