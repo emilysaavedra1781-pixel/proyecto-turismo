@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "tu-correo-verificado@tudominio.com",
+        from: "onboarding@resend.dev",
         to: [correo],
         subject: "Bienvenido a Proyecto Turismo",
         html: `<p>Hola <b>${nombre}</b>, bienvenido a tu proyecto!</p>`,
