@@ -1,14 +1,10 @@
-// enviarBienvenida.js
 export default async function enviarBienvenida(correo, nombre) {
   try {
     const response = await fetch(
       "https://umunbkwbnvsrjwkvgodg.supabase.co/functions/v1/smooth-function",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // No pongas apikey aquí si la función ya permite anon requests
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correo, nombre }),
       }
     );
@@ -26,6 +22,7 @@ export default async function enviarBienvenida(correo, nombre) {
     return false;
   }
 }
+
 
 
 
