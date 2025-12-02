@@ -1320,3 +1320,13 @@ body.modo-oscuro footer {
   border-radius: 5px;
   margin-bottom: 5px;
 }
+
+.estrella-btn { background:none; border:none; font-size:30px; cursor:pointer; margin-bottom:10px; color:gold; }
+.review-box { margin-top:20px; padding:10px; border:1px solid #ddd; border-radius:8px; }
+.review-box input, .review-box textarea { width:100%; margin-bottom:10px; padding:8px; }
+.meta-row { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:5px; }
+.contador { font-size:12px; color:#666; }
+.error { color:#b00020; font-size:13px; }
+.review-list p { background:#f4f4f4; padding:6px; border-radius:5px; margin-bottom:5px; }
+.review-item { display:flex; justify-content:space-between; gap:8px; align-items:flex-start; background:#fafafa; padding:6px; border-radius:6px; margin-bottom:6px; }
+.small { padding:4px 8px; font-size:12px; }

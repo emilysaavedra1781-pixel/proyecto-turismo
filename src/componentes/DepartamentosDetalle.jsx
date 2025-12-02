@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../style.css";
 import { useGlobal } from "./ContextoGlobal.jsx";
+import Resenas from "./resenas.jsx";
 
 export default function DepartamentosDetalle() {
   const { idioma, traducciones } = useGlobal();
@@ -56,35 +57,7 @@ export default function DepartamentosDetalle() {
             </a>
           </p>
 
-          {/* Reseñas */}
-          <div className="review-box">
-            <h3>{res("titulo")}</h3>
-
-            <input
-              type="text"
-              placeholder={res("nombre")}
-              value={form.nombre}
-              onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-            />
-
-            <textarea
-              placeholder={res("comentario")}
-              value={form.comentario}
-              onChange={(e) => setForm({ ...form, comentario: e.target.value })}
-            ></textarea>
-
-            <button className="btn-1" type="button" onClick={enviarReseña}>
-              {res("boton")}
-            </button>
-
-            <div className="review-list">
-              {reviews.map((r, i) => (
-                <p key={i}>
-                  <strong>{r.nombre}:</strong> {r.comentario}
-                </p>
-              ))}
-            </div>
-          </div>
+          
         </div>
       </div>
     );
@@ -93,16 +66,16 @@ export default function DepartamentosDetalle() {
   // 🔹 LISTA DE TARJETAS
   return (
     <section className="departamento-detalle-container">
-      <TarjetaDetalle nombre="Cusco" prefijo="dep_cusco" img="Imagen/cusco.jpg" />
-      <TarjetaDetalle nombre="Lima" prefijo="dep_lima" img="Imagen/lima.jpg" />
-      <TarjetaDetalle nombre="Puno" prefijo="dep_puno" img="Imagen/puno.jpeg" />
-      <TarjetaDetalle nombre="Arequipa" prefijo="dep_arequipa" img="Imagen/d4.jpg" />
-      <TarjetaDetalle nombre="Ica" prefijo="dep_ica" img="Imagen/ica.jpeg" />
-      <TarjetaDetalle nombre="Lambayeque" prefijo="dep_lambayeque" img="Imagen/Lambayeque.jpg" />
-      <TarjetaDetalle nombre="Loreto" prefijo="dep_loreto" img="Imagen/Loreto.jpg" />
-      <TarjetaDetalle nombre="San Martín" prefijo="dep_sanmartin" img="Imagen/San Martin.jpg" />
-      <TarjetaDetalle nombre="Junín" prefijo="dep_junin" img="Imagen/Junin.jpg" />
-      <TarjetaDetalle nombre="Ayacucho" prefijo="dep_ayacucho" img="Imagen/Ayacucho1.jpg" />
+      <TarjetaDetalle nombre="Cusco" prefijo="dep_cusco" img="Imagen/cusco.jpg" /><Resenas departamento="Cusco" />
+      <TarjetaDetalle nombre="Lima" prefijo="dep_lima" img="Imagen/lima.jpg" /><Resenas departamento="Lima" />
+      <TarjetaDetalle nombre="Puno" prefijo="dep_puno" img="Imagen/puno.jpeg" /><Resenas departamento="Puno" />
+      <TarjetaDetalle nombre="Arequipa" prefijo="dep_arequipa" img="Imagen/d4.jpg" /><Resenas departamento="Arequipa" />
+      <TarjetaDetalle nombre="Ica" prefijo="dep_ica" img="Imagen/ica.jpeg" /><Resenas departamento="Ica" />
+      <TarjetaDetalle nombre="Lambayeque" prefijo="dep_lambayeque" img="Imagen/Lambayeque.jpg" /><Resenas departamento="Lambayeque" />
+      <TarjetaDetalle nombre="Loreto" prefijo="dep_loreto" img="Imagen/Loreto.jpg" /><Resenas departamento="Loreto" />
+      <TarjetaDetalle nombre="San Martín" prefijo="dep_sanmartin" img="Imagen/San Martin.jpg" /><Resenas departamento="San Martín" />
+      <TarjetaDetalle nombre="Junín" prefijo="dep_junin" img="Imagen/Junin.jpg" /><Resenas departamento="Junín" />
+      <TarjetaDetalle nombre="Ayacucho" prefijo="dep_ayacucho" img="Imagen/Ayacucho1.jpg" /><Resenas departamento="Ayacucho" />
     </section>
   );
 }
