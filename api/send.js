@@ -1,41 +1,35 @@
-import nodemailer from "nodemailer";
-
 export default async function handler(req, res) {
-  // Permitir OPTIONS (CORS)
+  console.log("====== DEBUG SEND FUNCTION ======");
+  console.log("USER:", process.env.GMAIL_USER);
+  console.log("PASS:", process.env.GMAIL_APP_PASSWORD ? "OK" : "MISSING");
+  console.log("Method:", req.method);
+
   if (req.method === "OPTIONS") {
-    return res.status(200).send("ok");
+    return res.status(200).end();
   }
 
-  // Aceptar solo POST
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método no permitido" });
-  }
+  const nodemailer = require("nodemailer");
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  });
 
   try {
-    const { nombre, correo, mensaje } = req.body;
-
-    if (!nombre || !correo || !mensaje) {
-      return res.status(400).json({ error: "Faltan datos" });
-    }
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
-
     await transporter.sendMail({
       from: process.env.GMAIL_USER,
-      to: correo,
-      subject: `Hola ${nombre} 👋`,
-      html: `<h2>Hola ${nombre}</h2><p>${mensaje}</p>`,
+      to: req.body.email,
+      subject: "Prueba",
+      text: "Hola!",
     });
 
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ message: "OK" });
   } catch (error) {
-    console.error("Error:", error);
-    return res.status(500).json({ error: "Error enviando correo" });
+    console.log("====== ERROR ENVIANDO CORREO ======");
+    console.log(error); // <-- aquí verás exactamente el motivo del error
+    return res.status(500).json({ error: error.message });
   }
 }
