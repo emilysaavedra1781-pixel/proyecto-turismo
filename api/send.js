@@ -1,3 +1,4 @@
+// api/send.js
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
@@ -39,4 +40,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
-
