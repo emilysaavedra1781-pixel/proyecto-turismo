@@ -12,8 +12,11 @@ import Contacto from "./componentes/Contacto2.jsx";
 import Departamentos from "./componentes/Departamentos1.jsx";
 import Footer from "./componentes/Footer1.jsx";
 import Tabla from "./componentes/Tabla1.jsx";
+import { iniciarEnvioBienvenida } from "./componentes/enviarBienvenidaAuth.js";
 
 function App() {
+
+    iniciarEnvioBienvenida();
   return (
     <GlobalProvider> 
       <Header />

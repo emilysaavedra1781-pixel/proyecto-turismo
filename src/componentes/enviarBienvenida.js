@@ -1,3 +1,5 @@
+
+// src/utils/enviarBienvenida.js
 export default async function enviarBienvenida(correo, nombre) {
   try {
     const response = await fetch(
@@ -22,7 +24,3 @@ export default async function enviarBienvenida(correo, nombre) {
     return false;
   }
 }
-
-
-
-
