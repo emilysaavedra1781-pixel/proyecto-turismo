@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DepartamentosDetalle from "./DepartamentosDetalle";
 import "../style.css";
 import { useGlobal } from "./ContextoGlobal.jsx";
+import { supabase } from './supabaseClient';
 
 export default function Departamentos() {
   const { idioma, traducciones } = useGlobal();
@@ -14,21 +15,77 @@ export default function Departamentos() {
 
   const [mostrarDetalle, setMostrarDetalle] = useState(false);
 
+  const [guestId, setGuestId] = useState(null);
+
   // ⭐ FAVORITOS 
   const [favoritos, setFavoritos] = useState([]);
 
   useEffect(() => {
-    const favGuardados = JSON.parse(localStorage.getItem("favoritos")) || [];
-    setFavoritos(favGuardados);
+    let currentGuestId = localStorage.getItem("guest_id");
+    
+    if (!currentGuestId) {
+      currentGuestId = crypto.randomUUID(); 
+      localStorage.setItem("guest_id", currentGuestId);
+    }
+    
+    setGuestId(currentGuestId);
+    fetchFavoritos(currentGuestId);
   }, []);
 
-  function toggleFavorito(nombre) {
-    const nuevosFav = favoritos.includes(nombre)
-      ? favoritos.filter((f) => f !== nombre)
-      : [...favoritos, nombre];
+  async function fetchFavoritos(currentGuestId) {
+    if (!currentGuestId) return;
+
+    const { data, error } = await supabase
+      .from('departamentos_favoritos')
+      .select('departamento_id')
+      .eq('guest_id', currentGuestId);
+
+    if (error) {
+      console.error("Error al cargar favoritos desde Supabase:", error);
+      return;
+    }
+
+    const favNombres = data.map(row => row.departamento_id);
+    setFavoritos(favNombres);
+  }
+
+  async function toggleFavorito(nombre) {
+    if (!guestId) {
+      console.error("ID de invitado no cargado, no se puede guardar.");
+      return;
+    }
+    
+    let nuevosFav;
+    
+    if (favoritos.includes(nombre)) {
+      // Remover de Supabase (DELETE)
+      const { error } = await supabase
+        .from('departamentos_favoritos')
+        .delete()
+        .eq('guest_id', guestId)       // Filtra por ID de invitado
+        .eq('departamento_id', nombre);
+
+      if (error) {
+        console.error("Error al remover favorito:", error);
+        return;
+      }
+      nuevosFav = favoritos.filter((f) => f !== nombre);
+    } else {
+      // Añadir a Supabase (INSERT)
+      const { error } = await supabase
+        .from('departamentos_favoritos')
+        .insert([
+          { guest_id: guestId, departamento_id: nombre } // Usa guest_id
+        ]);
+
+      if (error) {
+        console.error("Error al añadir favorito:", error);
+        return;
+      }
+      nuevosFav = [...favoritos, nombre];
+    }
 
     setFavoritos(nuevosFav);
-    localStorage.setItem("favoritos", JSON.stringify(nuevosFav));
   }
 
   function esFavorito(nombre) {
@@ -70,6 +127,7 @@ export default function Departamentos() {
                 {/* ⭐ BOTÓN DE FAVORITO */}
                 <button
                   className="estrella-btn"
+                  disabled={guestId === null}
                   onClick={() => toggleFavorito(dep.nombre)}
                 >
                   {esFavorito(dep.nombre) ? "⭐" : "☆"}
@@ -88,5 +146,3 @@ export default function Departamentos() {
     </div>
   );
 }
-
-
