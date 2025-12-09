@@ -100,25 +100,33 @@ const Contacto = () => {
             return;
         }
 
-        // ⬆ Guardar en Supabase
-        const { error } = await supabase
-            .from("contacto")
-            .insert([
-                {
-                    nombre: formData.nombre,
-                    correo: formData.correo,
-                    opinion: formData.mensaje
-                }
-            ]);
+        try {
+  const response = await fetch("/api/send", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nombre: formData.nombre,
+      correo: formData.correo
+    })
+  });
 
-        if (error) {
-            console.error("Error al guardar en Supabase:", error);
-            setSubmitStatus("error");
-            return;
-        }
+  const data = await response.json();
 
-        // 📩 Enviar correo de bienvenida
-        await enviarBienvenida(formData.correo, formData.nombre);
+  if (!response.ok) {
+    console.error("Error del servidor:", data);
+    setSubmitStatus("error");
+    return;
+  }
+
+  setSubmitStatus("success");
+  setFormData({ nombre: "", correo: "", mensaje: "" });
+  setErrors({});
+} catch (err) {
+  console.error("Error de red:", err);
+  setSubmitStatus("error");
+}
 
         // ✔ Éxito
         setSubmitStatus("success");
