@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useGlobal } from "./ContextoGlobal.jsx";
-import { supabase } from "./supabaseClient";
-import enviarBienvenida from "./enviarBienvenida.js";
+
 
 // 📊 Importación de Chart.js
 import { Bar } from "react-chartjs-2";
@@ -128,11 +127,9 @@ const Contacto = () => {
   setSubmitStatus("error");
 }
 
-        // ✔ Éxito
-        setSubmitStatus("success");
-        setFormData({ nombre: '', correo: '', mensaje: '' });
-        setErrors({});
-    };
+ }
+
+     
 
     // 🎨 Estilos
     const formStyle = { padding: '20px', maxWidth: '600px', margin: '20px auto', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#fff' };
